@@ -1,0 +1,68 @@
+import os
+
+from celery import shared_task
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+
+@shared_task
+def send_email_task(subject, from_email, to_emails, plain_message, html_message):
+    email = EmailMultiAlternatives(
+        subject, plain_message, from_email, to_emails)
+    email.content_subtype = 'html'
+    email.attach_alternative(html_message, "text/html")
+    email.send()
+
+class EmailBuilder(object):
+
+    def __init__(self):
+        self.template = None
+        self.context = None
+        self.subject = None
+        self.emails = []
+
+    def set_template(self, template):
+        self.template = template
+        return self
+
+    def add_email(self, email: str):
+        self.emails.append(email)
+        return self
+
+    def set_context(self, context):
+        self.context = context
+        return self
+
+    def set_subject(self, subject):
+        self.subject = subject
+        return self
+
+    def build(self):
+        if not self.template or not self.context or not self.subject:
+            raise ValueError("Template, context, and subject must be set.")
+
+        html_message = render_to_string(self.template, self.context)
+        plain_message = strip_tags(html_message)
+        from_email = os.getenv("EMAIL_HOST_USER")
+        email = EmailMultiAlternatives(
+            self.subject,
+            plain_message,
+            from_email,
+            self.emails,
+        )
+        email.content_subtype = 'html'
+        email.attach_alternative(html_message, "text/html")
+
+        return email
+
+    def send(self):
+        email = self.build()
+        send_email_task.delay(
+            email.subject,
+            email.from_email,
+            email.to,
+            email.body,
+            email.alternatives[0][0]
+        )
+        self.emails.clear()
