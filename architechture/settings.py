@@ -35,7 +35,12 @@ DEBUG = env.bool('DEBUG')
 # Application definition
 
 LOCAL_APPS = [
-    'apps.academics',
+    'apps.users',
+    'apps.students',
+    'apps.teachers',
+    'apps.courses',
+    'apps.qualifications',
+    'apps.importer_scrapper',
 ]
 
 THIRD_APPS = [
@@ -159,7 +164,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'academics.User'
+AUTH_USER_MODEL = 'users.User'
 
 
 ALLOWED_HOSTS = ['*']

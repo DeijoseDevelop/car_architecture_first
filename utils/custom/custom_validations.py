@@ -2,7 +2,7 @@ from django.conf import settings
 from django.utils import timezone
 from rest_framework import permissions
 
-from apps.academics.models import User
+from apps.users.models import User
 from utils.custom import JWTMaker, TokenStatus
 from utils.constants import *
 
