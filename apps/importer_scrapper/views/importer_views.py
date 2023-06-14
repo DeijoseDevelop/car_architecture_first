@@ -17,7 +17,7 @@ class ReadFileView(LoginRequiredMixin, FormView):
     form_class = ReadFileForm
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
-    template_name = 'external_form.html'
+    template_name = 'importer.html'
     success_url = reverse_lazy('readfile')
 
     def form_valid(self, form):
@@ -48,7 +48,7 @@ class ReadFileView(LoginRequiredMixin, FormView):
 
         for student in students_dict:
             email_builder\
-                .set_template('emails/mail_template_admin.html')\
+                .set_template('emails/mail_template_admin_importer.html')\
                 .add_email(self.request.user.email)\
                 .set_context(student)\
                 .set_subject('Estudiante agregado exitosamente')\

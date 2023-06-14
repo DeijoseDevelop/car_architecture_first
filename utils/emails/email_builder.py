@@ -5,14 +5,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+from apps.importer_scrapper.tasks import send_email_task
 
-@shared_task
-def send_email_task(subject, from_email, to_emails, plain_message, html_message):
-    email = EmailMultiAlternatives(
-        subject, plain_message, from_email, to_emails)
-    email.content_subtype = 'html'
-    email.attach_alternative(html_message, "text/html")
-    email.send()
 
 class EmailBuilder(object):
 

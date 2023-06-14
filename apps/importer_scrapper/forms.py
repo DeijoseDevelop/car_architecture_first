@@ -39,17 +39,10 @@ class ReadFileForm(forms.Form):
 
 
 class ScrapperForm(forms.Form):
-    topic = forms.ChoiceField(
+    topic = forms.CharField(
         label=_("Search topic"),
-        choices=TOPICS,
-        widget=forms.Select(
+        widget=forms.TextInput(
             attrs={"class": 'form-control'},
         )
     )
 
-    page = forms.IntegerField(
-        label=_("Page to search"),
-        widget=forms.NumberInput(
-            attrs={"class": 'form-control'}
-        )
-    )
