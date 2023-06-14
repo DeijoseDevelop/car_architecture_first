@@ -12,13 +12,6 @@ from apps.courses.api.serializers import (
 
 class ListQualificationsSerializer(serializers.ModelSerializer):
 
-    # course = ListCourseSerializer(read_only=True)
-    # student = ListStudentSerializer(read_only=True)
-
-    # class Meta:
-    #     model = Qualification
-    #     fields = ('value', 'qualification_date',)
-
     course = ListCourseWithoutStudentsAndTeachersSerializer(read_only=True)
     student = ListStudentSerializer(read_only=True)
 

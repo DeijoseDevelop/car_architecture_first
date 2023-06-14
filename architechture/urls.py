@@ -6,14 +6,36 @@ from django.views.generic import RedirectView
 from django.contrib.auth.views import LoginView
 
 
+urlpatterns_endpoints = [
+    path(
+        "api/v1/users/",
+        include("apps.users.api.urls")
+    ),
+    path(
+        "api/v1/students/",
+        include("apps.students.api.urls")
+    ),
+    path(
+        "api/v1/teachers/",
+        include("apps.teachers.api.urls")
+    ),
+    path(
+        "api/v1/courses/",
+        include("apps.courses.api.urls")
+    ),
+    path(
+        "api/v1/qualifications/",
+        include("apps.qualifications.api.urls")
+    ),
+]
+
 urlpatterns = [
     path('', RedirectView.as_view(url="/admin/", permanent=True)),
-    path('i18n/', include('django.conf.urls.i18n')),
-    path('admin/', admin.site.urls),
     path('', include('apps.importer_scrapper.urls')),
-    path("api/v1/users/", include("apps.users.api.urls")),
-    path("api/v1/students/", include("apps.students.api.urls")),
-    path("api/v1/teachers/", include("apps.teachers.api.urls")),
-    path("api/v1/courses/", include("apps.courses.api.urls")),
-    path("api/v1/qualifications/", include("apps.qualifications.api.urls")),
+    path('admin/', admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),
+
+    *urlpatterns_endpoints,
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

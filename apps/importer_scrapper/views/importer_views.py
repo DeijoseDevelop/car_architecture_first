@@ -1,13 +1,7 @@
 from datetime import datetime
 
-from django.shortcuts import redirect
-from django.views.generic import View
-from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.base import TemplateView
-from django.contrib.auth.views import LoginView
 from django.views.generic.edit import FormView
-from django.contrib.auth import authenticate, login
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -15,43 +9,15 @@ from django.db.utils import IntegrityError
 
 from apps.importer_scrapper.forms import ReadFileForm
 from apps.importer_scrapper.tasks import validate_file_task
-from apps.importer_scrapper.forms import ExternalAuthForm
-from apps.students.models import Student
 from utils.emails import EmailBuilder
+from apps.students.models import Student
 
 
-class HomeView(LoginRequiredMixin, TemplateView):
+class ReadFileView(LoginRequiredMixin, FormView):
+    form_class = ReadFileForm
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
-    template_name = "home.html"
-
-
-class ExternalLoginView(FormView):
-    form_class = ExternalAuthForm
-    template_name = 'auth/login.html'
-
-    def form_valid(self, form):
-        email = form.cleaned_data['email']
-        password = form.cleaned_data['password']
-
-        user = authenticate(username=email, password=password)
-        if user is not None and user.is_active:
-            login(self.request, user)
-
-            return redirect('home')
-
-        return super().form_valid(form)
-
-
-class ExternalLogoutView(LoginRequiredMixin, View):
-    def get(self, request):
-        logout(request)
-        return redirect("login")
-
-
-class ReadFileView(FormView):
-    form_class = ReadFileForm
-    template_name = 'read_file.html'
+    template_name = 'external_form.html'
     success_url = reverse_lazy('readfile')
 
     def form_valid(self, form):
@@ -75,7 +41,8 @@ class ReadFileView(FormView):
             return self.form_invalid(form)
 
         if not form.errors:
-            messages.success(self.request, _("Students has been saved successfully."))
+            messages.success(self.request, _(
+                "Students has been saved successfully."))
 
         email_builder = EmailBuilder()
 
@@ -116,7 +83,8 @@ class ReadFileView(FormView):
                 document_number=student['document_number'],
                 first_name=student['first_name'],
                 last_name=student['last_name'],
-                born_date=datetime.strptime(student['born_date'], date_format).date(),
+                born_date=datetime.strptime(
+                    student['born_date'], date_format).date(),
                 address=student['address'],
                 email=student['email'],
                 phone=student['phone'],
@@ -126,4 +94,3 @@ class ReadFileView(FormView):
             for student in students_dict
         ]
         Student.objects.bulk_create(students)
-

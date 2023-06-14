@@ -1,6 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from apps.importer_scrapper.constants import TOPICS
+
 
 class ExternalAuthForm(forms.Form):
 
@@ -35,3 +37,19 @@ class ReadFileForm(forms.Form):
         ),
     )
 
+
+class ScrapperForm(forms.Form):
+    topic = forms.ChoiceField(
+        label=_("Search topic"),
+        choices=TOPICS,
+        widget=forms.Select(
+            attrs={"class": 'form-control'},
+        )
+    )
+
+    page = forms.IntegerField(
+        label=_("Page to search"),
+        widget=forms.NumberInput(
+            attrs={"class": 'form-control'}
+        )
+    )
