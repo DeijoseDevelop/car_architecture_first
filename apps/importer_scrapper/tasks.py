@@ -3,6 +3,8 @@ from django.core.mail import EmailMultiAlternatives
 
 from utils.validators.file_validator import FileValidator
 from utils.scrappers import DataMiner
+from apps.courses.models import Course
+from django.db.utils import IntegrityError
 
 
 @shared_task
@@ -26,3 +28,15 @@ def make_scrapper(topic: str):
     courses = scrapper.get_courses(topic)
     return courses
 
+@shared_task
+def save_courses_into_database(courses_dict: list):
+    for course in courses_dict:
+        try:
+            course_instance = Course(
+                name=course['name'],
+                description=course['description']
+            )
+            course_instance.save()
+            print(course_instance.name)
+        except IntegrityError as error:
+            continue

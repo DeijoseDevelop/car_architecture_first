@@ -16,7 +16,7 @@ class EmailBuilder(object):
         self.subject = None
         self.emails = []
 
-    def set_template(self, template):
+    def set_template(self, template: str):
         self.template = template
         return self
 
@@ -24,11 +24,11 @@ class EmailBuilder(object):
         self.emails.append(email)
         return self
 
-    def set_context(self, context):
+    def set_context(self, context: dict):
         self.context = context
         return self
 
-    def set_subject(self, subject):
+    def set_subject(self, subject: str):
         self.subject = subject
         return self
 

@@ -51,14 +51,14 @@ class ReadFileView(LoginRequiredMixin, FormView):
                 .set_template('emails/mail_template_admin_importer.html')\
                 .add_email(self.request.user.email)\
                 .set_context(student)\
-                .set_subject('Estudiante agregado exitosamente')\
+                .set_subject(_('Estudiante agregado exitosamente'))\
                 .send()
             email_builder\
                 .set_template('emails/mail_template_student.html')\
                 .add_email(self.request.user.email)\
                 .add_email(student['email'])\
                 .set_context(student)\
-                .set_subject('Bienvenido al curso')\
+                .set_subject(_('Bienvenido al curso'))\
                 .send()
 
         return super().form_valid(form)
