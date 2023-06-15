@@ -42,7 +42,10 @@ class ScrapperForm(forms.Form):
     topic = forms.CharField(
         label=_("Search topic"),
         widget=forms.TextInput(
-            attrs={"class": 'form-control'},
+            attrs={
+                "class": 'form-control',
+                "placeholder": _("Enter your topic to search"),
+            }
         )
     )
 

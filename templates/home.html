@@ -1,18 +1,27 @@
 {% extends 'base.html' %}
 
 
-{% block title %}
-    Home
-{% endblock title %}
-
+{% block title %} Home {% endblock title %}
 
 {% block content %}
-    <br>
-    <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
-    <br>
-    <br>
-    <a href="{% url 'readfile' %}" class="btn btn-primary">Read CSV or EXCEL</a>
-    <br>
-    <br>
-    <a href="{% url 'scrapper' %}" class="btn btn-success">Course scrapper</a>
+{% load static %}
+{% include 'navbar.html' %}
+    <div id="body-background"></div>
+
+    <div class="body-background">
+        <div class="home-menu">
+            <a class="home-links" href="{% url 'readfile' %}">
+                <figure>
+                    <img src="{% static 'img/importer.svg' %}" alt="Importer Image">
+                    <figcaption>Read CSV or EXCEL</figcaption>
+                </figure>
+            </a>
+            <a class="home-links" href="{% url 'scrapper' %}">
+                <figure>
+                    <img src="{% static 'img/scrapper.svg' %}" alt="Scrapper Image">
+                    <figcaption>Course scrapper</figcaption>
+                </figure>
+            </a>
+        </div>
+    </div>
 {% endblock content %}

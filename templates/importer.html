@@ -2,7 +2,9 @@
 
 {% block title %} Read File {% endblock %}
 
+
 {% block content %}
+{% include 'navbar.html' %}
     <div class="container">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}

@@ -1,0 +1,40 @@
+div.home-menu {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+}
+
+a.home-links {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px 30px;
+    text-decoration: none;
+    color: #000;
+    width: 200px;
+    height: 270px;
+    border-radius: 10px;
+    box-shadow: #FFF;
+}
+
+a.home-links figure {
+    width: 100%;
+}
+
+a.home-links img {
+    width: 100%;
+    height: 200px;
+}
+
+a.home-links figcaption {
+    text-align: center;
+}
+
+a.home-links:hover {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+    width: 220px;
+    height: 290px;
+    border: 5px solid orange;
+}
