@@ -36,3 +36,40 @@
 2. Scrapper and Importer
 
     http://localhost:8000/home/
+
+
+### Microservice
+
+#### Getting Started
+
+1. Login to the admin.
+2. Creates an api key in its respective module.
+3. Copy the api key that appears in the message when you create it.
+4. Put the api key in all the requests you make in the headers as: x-api-key.
+
+**To use all endpoints except those starting with /users/ you must authenticate in the ednpoint /users/validate/ with your email and password.**
+
+**The token you get back when authenticating must be sent to all other endpoints in the headers like this: Authorization**
+
+#### Base url: http://localhost:8000/api/v1
+
+#### Users Urls
+
+1. Auth: /users/validate/
+2. Create user: /users/create/
+
+#### Students Urls
+
+1. Students: /students/list/
+
+#### Teachers Urls
+
+1. Teacher: /teachers/list/
+
+#### Courses Urls
+
+1. Courses: /courses/list/
+
+#### Qualifications Urls
+
+1. Qualifications: /qualifications/list/
