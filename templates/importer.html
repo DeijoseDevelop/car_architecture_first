@@ -5,31 +5,30 @@
 
 {% block content %}
 {% include 'navbar.html' %}
-    <div class="container">
-        <form method="post" enctype="multipart/form-data">
+    <div class="container mt-3">
+        <form method="post" class="w-25" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
                 <div class="form-group">
                     {{ field.label_tag }}
                     {{ field }}
                     {% if field.errors %}
-                        <ul class="errors text-danger">
+                        <section class="errors text-danger mt-2">
                             {% for error in field.errors %}
-                                <li>{{ error }}</li>
+                            <article class="alert alert-danger d-flex align-items-center" role="alert">{{ error }}</article>
                             {% endfor %}
-                        </ul>
+                        </section>
                     {% endif %}
                     {% if messages %}
-                        <ul class="messages text-success">
+                        <section class="messages text-success mt-2">
                             {% for message in messages %}
-                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            <article class="alert alert-success d-flex align-items-center" role="alert">{{ message }}</article>
                             {% endfor %}
-                        </ul>
+                        </section>
                     {% endif %}
                 </div>
             {% endfor %}
-            <br/>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="submit" class="btn btn-primary mt-2">Enviar</button>
         </form>
     </div>
 {% endblock content %}
