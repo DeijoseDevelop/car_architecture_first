@@ -26,6 +26,18 @@
     ```sudo docker exec -t architechture_web python manage.py createsuperuser```
 
 
+### Excel or CSV headers
+
+1. document_number
+2. first_name
+3. last_name
+4. born_date
+5. address
+6. email
+7. phone
+8. gender
+9. career
+
 
 ### Important URLs
 
